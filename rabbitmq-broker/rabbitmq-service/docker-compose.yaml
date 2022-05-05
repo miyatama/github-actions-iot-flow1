@@ -1,0 +1,30 @@
+version: '3.0'
+services:
+  broker:
+    image: mqtt-broker:1.0
+    build: ./mqtt-broker
+    ports: 
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+    command: '-s'
+  stream-processor:
+    image: github-event-streamer
+    build: ./github-event-streamer
+    command: '--maintenance'
+  dummy-producer:
+    image: dummy-producer
+    build: ./dummy-producer
+  github-event-consumer:
+    image: mqtt-consumer
+    build: ./mqtt-consumer
+    command: '--maintenance'
+    environment:
+      - SUBSCRIBE_TOPIC=github-actions-event
+  device-event-consumer:
+    image: mqtt-consumer
+    build: ./mqtt-consumer
+    command: '--maintenance'
+    environment:
+      - SUBSCRIBE_TOPIC=device-evnet

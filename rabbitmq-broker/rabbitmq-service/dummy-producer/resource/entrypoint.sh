@@ -6,6 +6,27 @@ maintenance_mode=1
 start_server=1
 
 function run() {
+  # wait for creating queue
+  result=1
+  while [ ${result} -eq 1 ] ; do
+    result=`curl \
+      -s \
+      -u rabbitmq:rabbitmq \
+      -H 'Content-Type:application/json' \
+      http://broker:15672/api/queues | \
+      jq -r '.[].name' | \
+      grep \
+        -e device-event \
+        -e github-actions-event | \
+      grep -c ""`
+    if [ ${result} -ge 2 ] ; then
+      result=0
+    else
+      result=1
+    fi
+    sleep 5
+  done
+  cd dummy_producer
   mix run --no-halt
   tail -f /dev/null
 }

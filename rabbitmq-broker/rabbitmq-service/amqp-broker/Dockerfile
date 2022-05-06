@@ -5,6 +5,7 @@ RUN apt update \
   && apt install -y \
     vim \
     curl  \
+    jq \
   && mkdir /data
 
 COPY ./resource/data/schema.json /data/schema.json

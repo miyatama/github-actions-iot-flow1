@@ -1,6 +1,5 @@
 FROM elixir:1.13.4
 
-
 RUN apt update \
   && apt upgrade -y \
   && apt install -y \
@@ -11,9 +10,9 @@ RUN apt update \
   && mkdir /app
 
 WORKDIR /app
-COPY ./resource/dummy_producer/ /app/dummy_producer/
+COPY ./resource/amqp_consumer/ /app/amqp_consumer/
 
-RUN cd ./dummy_producer \
+RUN cd ./amqp_consumer \
   && mix local.hex --force \
   && mix local.rebar --force \
   && mix deps.get --force \

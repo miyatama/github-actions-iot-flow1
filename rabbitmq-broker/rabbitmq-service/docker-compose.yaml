@@ -1,8 +1,8 @@
 version: '3.0'
 services:
   broker:
-    image: mqtt-broker:1.0
-    build: ./mqtt-broker
+    image: amqp-broker:1.0
+    build: ./amqp-broker
     ports: 
       - 15672:15672
     environment:
@@ -16,15 +16,16 @@ services:
   dummy-producer:
     image: dummy-producer
     build: ./dummy-producer
+    command: '--server'
   github-event-consumer:
-    image: mqtt-consumer
-    build: ./mqtt-consumer
-    command: '--maintenance'
+    image: amqp-consumer
+    build: ./amqp-consumer
+    command: '--server'
     environment:
       - SUBSCRIBE_TOPIC=github-actions-event
   device-event-consumer:
-    image: mqtt-consumer
-    build: ./mqtt-consumer
-    command: '--maintenance'
+    image: amqp-consumer
+    build: ./amqp-consumer
+    command: '--server'
     environment:
       - SUBSCRIBE_TOPIC=device-evnet

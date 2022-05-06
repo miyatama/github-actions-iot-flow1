@@ -1,4 +1,4 @@
-FROM elixir:1.9.4
+FROM elixir:1.13.4
 
 RUN apt update \
   && apt upgrade -y \

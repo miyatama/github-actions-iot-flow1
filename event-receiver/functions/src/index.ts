@@ -4,7 +4,12 @@ import * as Amqp from "amqp-ts";
 export const githubActionsEvent =
   functions.https.onRequest((request, response) => {
     functions.logger.info("receive data: ", request.body);
-    const connection = new Amqp.Connection("amqp://rabbitmq:rabbitmq@34.84.72.244:5672");
+    const user = "RabbitMQ User";
+    const password = "RabbitMQ Password";
+    const rabbitMqHost = "RabbitMQ Endpoint";
+    const rabbitMqEndpoint = 
+      "amqp://" + user + ":" + password + "@" + rabbitMqHost;
+    const connection = new Amqp.Connection(rabbitMqEndpoint);
     const msg = new Amqp.Message(JSON.stringify(request.body));
     const exchange = connection.declareExchange(
         "amq.topic",

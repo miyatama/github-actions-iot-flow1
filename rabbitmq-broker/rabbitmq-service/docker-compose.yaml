@@ -5,14 +5,18 @@ services:
     build: ./amqp-broker
     ports: 
       - 15672:15672
+      - 5672:5672
     environment:
       - RABBITMQ_DEFAULT_PASS=rabbitmq
       - RABBITMQ_DEFAULT_USER=rabbitmq
     command: '-s'
   stream-processor:
-    image: github-event-streamer
-    build: ./github-event-streamer
-    command: '--maintenance'
+    image: stream-processor
+    build: ./stream-processor
+    command: '--server'
+    environment:
+      - GITHUB_TOPIC=github-actions-event
+      - DEVICE_TOPIC=device-event
   dummy-producer:
     image: dummy-producer
     build: ./dummy-producer
@@ -28,4 +32,4 @@ services:
     build: ./amqp-consumer
     command: '--server'
     environment:
-      - SUBSCRIBE_TOPIC=device-evnet
+      - SUBSCRIBE_TOPIC=device-event

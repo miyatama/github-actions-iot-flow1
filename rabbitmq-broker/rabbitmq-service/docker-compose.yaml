@@ -6,10 +6,11 @@ services:
     ports: 
       - 15672:15672
       - 5672:5672
+      - 1883:1883
     environment:
       - RABBITMQ_DEFAULT_PASS=rabbitmq
       - RABBITMQ_DEFAULT_USER=rabbitmq
-    command: '-s'
+    command: '--server'
   stream-processor:
     image: stream-processor
     build: ./stream-processor

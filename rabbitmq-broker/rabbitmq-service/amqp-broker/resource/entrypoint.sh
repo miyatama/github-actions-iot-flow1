@@ -28,16 +28,16 @@ function run() {
     sleep 5
   done
 
-  echo "enabling mqtt plugin"
-  rabbitmq-plugins enable rabbitmq_mqtt
+  echo "started RabbitMQ node"
+  rabbitmqctl import_definitions /data/schema.json
+
+  echo "adding mqtt user"
   rabbitmqctl add_user mqtt-user mqtt-pwd
   rabbitmqctl set_permissions -p / mqtt-user ".*" ".*" ".*"
   rabbitmqctl set_user_tags mqtt-user management
 
-  echo "started RabbitMQ node"
-  rabbitmqctl import_definitions /data/schema.json
-
   echo "imported schema"
+  echo "wait to finishing service"
   tail -f /dev/null
 }
 

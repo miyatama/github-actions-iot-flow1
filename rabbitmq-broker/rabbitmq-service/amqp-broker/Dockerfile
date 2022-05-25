@@ -6,8 +6,11 @@ RUN apt update \
     vim \
     curl  \
     jq \
-  && mkdir /data
+  && mkdir /data \
+  && rabbitmq-plugins enable --offline \
+    rabbitmq_mqtt
 
+COPY ./resource/data/etc/rabbitmq/rabbitmq.conf /etc/rabbitmq/rabbitmq.conf
 COPY ./resource/data/schema.json /data/schema.json
 COPY ./resource/entrypoint.sh /entrypoint.sh
 

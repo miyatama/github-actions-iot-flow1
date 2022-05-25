@@ -27,8 +27,8 @@ function run() {
     sleep 5
   done
   cd dummy_producer
+  echo "start service"
   mix run --no-halt
-  tail -f /dev/null
 }
 
 function usage() {

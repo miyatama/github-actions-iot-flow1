@@ -27,8 +27,9 @@ function run() {
     sleep 5
   done
   cd amqp_consumer
+  echo "start service"
   mix run --no-halt
-  tail -f /dev/null
+  echo "finish service"
 }
 
 function usage() {

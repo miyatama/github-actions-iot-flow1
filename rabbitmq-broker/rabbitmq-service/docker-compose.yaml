@@ -34,3 +34,9 @@ services:
     command: '--server'
     environment:
       - SUBSCRIBE_TOPIC=device-event
+  mqtt-device-event-consumer:
+    image: mqtt-consumer
+    build: ./mqtt-consumer
+    command: '--server'
+    environment:
+      - SUBSCRIBE_TOPIC="/device-event"

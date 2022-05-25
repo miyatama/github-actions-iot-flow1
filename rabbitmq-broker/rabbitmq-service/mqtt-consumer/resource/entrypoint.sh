@@ -26,10 +26,15 @@ function run() {
     fi
     sleep 5
   done
-  cd stream_app
-  echo "start service"
-  mix run --no-halt
-  echo "finish service"
+  echo "start server"
+
+  echo "start mqtt subscribe"
+  mqtt sub \
+    -h broker \
+    -p 1883 \
+    -u mqtt-user \
+    -P "mqtt-pwd" \
+    -t ${SUBSCRIBE_TOPIC}
 }
 
 function usage() {

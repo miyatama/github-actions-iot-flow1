@@ -15,9 +15,27 @@
       "routing_key": "github-actions-event",
       "source": "amq.topic",
       "vhost": "/"
+    },
+    {
+      "source":"amq.topic", 
+      "vhost":"/", 
+      "destination":"mqtt.topic", 
+      "destination_type":"exchange", 
+      "routing_key":"device-event", 
+      "arguments":{}
     }
   ],
-  "exchanges": [],
+  "exchanges": [
+    {
+      "name":"mqtt.topic", 
+      "vhost":"/", 
+      "type":"topic", 
+      "durable":true, 
+      "auto_delete":false, 
+      "internal":false, 
+      "arguments":{}
+    }
+  ],
   "global_parameters": [],
   "parameters": [],
   "permissions": [

@@ -32,8 +32,9 @@ function run() {
   mqtt sub \
     -h broker \
     -p 1883 \
-    -u mqtt-user \
-    -P "mqtt-pwd" \
+    -i ${CLIENT_ID} \
+    -u ${MQTT_USER} \
+    -P ${MQTT_PWD} \
     -t ${SUBSCRIBE_TOPIC}
 }
 

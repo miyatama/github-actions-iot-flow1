@@ -39,4 +39,7 @@ services:
     build: ./mqtt-consumer
     command: '--server'
     environment:
-      - SUBSCRIBE_TOPIC="/device-event"
+      - SUBSCRIBE_TOPIC=device-event
+      - CLIENT_ID=mqtt.container-consumer
+      - MQTT_USER=mqtt-user
+      - MQTT_PWD=mqtt-pwd

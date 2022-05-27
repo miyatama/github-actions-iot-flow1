@@ -45,8 +45,8 @@ defmodule AmqpConsumer.Consumer do
   end
 
   defp consume(channel, tag, redelivered, payload) do
+    :ok = Basic.ack channel, tag
     Logger.info("AmqpConsumer.Consumer.consume() - #{payload}")
-
   rescue
     exception ->
       :ok = Basic.reject channel, tag, requeue: not redelivered

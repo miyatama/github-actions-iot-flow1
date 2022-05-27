@@ -45,6 +45,7 @@ defmodule StreamApp.Consumer do
   end
 
   defp consume(channel, tag, redelivered, payload) do
+    :ok = Basic.ack channel, tag
     Logger.info("StreamApp.Consumer.consume() - #{payload}")
     Jason.decode!(payload, [{:keys, :atoms}])
     |> publish(channel)
@@ -57,7 +58,7 @@ defmodule StreamApp.Consumer do
 
   defp publish(%{event: event, branch: branch}, channel) when event == "merge" and branch == "main" do
     Logger.info("publish(channel, map)")
-    status = AMQP.Basic.publish(channel, "", publish_topic(), "{\"event\": \"wakeup\", \"device\": \"yobikomi\"}")
+    status = AMQP.Basic.publish(channel, "amq.direct", publish_topic(), "{\"event\": \"wakeup\", \"device\": \"yobikomi\"}")
     Logger.info("publish status: #{status}")
   end
 

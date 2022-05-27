@@ -1,41 +1,12 @@
 {
+
   "bindings": [
-    {
-      "arguments": {},
-      "destination": "device-event",
-      "destination_type": "queue",
-      "routing_key": "device-event",
-      "source": "amq.topic",
-      "vhost": "/"
-    },
-    {
-      "arguments": {},
-      "destination": "github-actions-event",
-      "destination_type": "queue",
-      "routing_key": "github-actions-event",
-      "source": "amq.topic",
-      "vhost": "/"
-    },
-    {
-      "source":"amq.topic", 
-      "vhost":"/", 
-      "destination":"mqtt.topic", 
-      "destination_type":"exchange", 
-      "routing_key":"device-event", 
-      "arguments":{}
-    }
+    {"source":"amq.direct", "vhost":"/", "destination":"amq.topic", "destination_type":"exchange", "routing_key":"device-event", "arguments":{}},
+    {"source":"amq.direct", "vhost":"/", "destination":"device-event", "destination_type":"queue", "routing_key":"device-event", "arguments":{}},
+    {"source":"amq.direct", "vhost":"/", "destination":"github-actions-event", "destination_type":"queue", "routing_key":"github-actions-event", "arguments":{}},
+    {"source":"amq.topic", "vhost":"/", "destination":"mqtt-subscription-mqtt.container-consumerqos0", "destination_type":"queue", "routing_key":"amq.topic", "arguments":{}}
   ],
-  "exchanges": [
-    {
-      "name":"mqtt.topic", 
-      "vhost":"/", 
-      "type":"topic", 
-      "durable":true, 
-      "auto_delete":false, 
-      "internal":false, 
-      "arguments":{}
-    }
-  ],
+  "exchanges": [],
   "global_parameters": [],
   "parameters": [],
   "permissions": [

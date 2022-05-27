@@ -8,7 +8,7 @@ defmodule DummyProducer.Publisher do
     {:ok, chan} = Channel.open(conn)
     status = AMQP.Basic.publish(chan, "", "github-actions-event", "{\"event\": \"merge\", \"branch\": \"main\"}")
     Logger.info("publish statsu: #{status}")
-    status = AMQP.Basic.publish(chan, "", "github-actions-event", "{\"event\": \"merge\", \"branch\": \"develop\"}")
+    status = AMQP.Basic.publish(chan, "amq.direct", "github-actions-event", "{\"event\": \"merge\", \"branch\": \"develop\"}")
     Logger.info("publish statsu: #{status}")
     Connection.close(conn)
   end

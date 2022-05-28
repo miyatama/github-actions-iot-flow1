@@ -21,7 +21,7 @@ services:
   dummy-producer:
     image: dummy-producer
     build: ./dummy-producer
-    command: '--server'
+    command: '--maintenance'
   github-event-consumer:
     image: amqp-consumer
     build: ./amqp-consumer

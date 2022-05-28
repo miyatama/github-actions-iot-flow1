@@ -7,13 +7,13 @@ export const githubActionsEvent =
     const user = "";
     const password = "";
     const rabbitMqHost = "";
-    const rabbitMqEndpoint = 
+    const rabbitMqEndpoint =
       "amqp://" + user + ":" + password + "@" + rabbitMqHost;
     const connection = new Amqp.Connection(rabbitMqEndpoint);
     const msg = new Amqp.Message(JSON.stringify(request.body));
     const exchange = connection.declareExchange(
-        "amq.topic",
-        "topic",
+        "amq.direct",
+        "direct",
         {durable: true});
     connection.completeConfiguration().then(() => {
       exchange.send(msg, "github-actions-event");
@@ -26,7 +26,7 @@ export const githubActionsEvent =
           .status(200)
           .send("AMQP publish succeed");
     }).catch((err) => {
-      functions.logger.error("AMQP connection error: ", msg);
+      functions.logger.error("AMQP connection error: ", err);
       response
           .status(500)
           .send("AMQP connection error");
